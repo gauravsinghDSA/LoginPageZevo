@@ -26,10 +26,15 @@ public class LoginController {
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
         try {
             Login login = loginServices.CheckLogin(loginRequestDTO.getLoginID(), loginRequestDTO.getPassword());
-            loginResponseDTO.setStatus("logged in Succesfully");
+            if (login!=null) {
+                loginResponseDTO.setStatus("logged in Succesfully");
+            }
+            else {
+                throw new LoginException();
+            }
 
         } catch (Exception ex) {
-            throw new LoginException();
+            loginResponseDTO.setStatus("Not able to login");
         }
         return loginResponseDTO;
     }
